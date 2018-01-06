@@ -9,6 +9,7 @@
     "react-scripts": "1.0.17",
     "webfontloader": "^1.6.28"
   },
+  "proxy": "http://localhost:3001",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
