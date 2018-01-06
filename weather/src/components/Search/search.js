@@ -92,12 +92,10 @@ export default class Search extends Component {
         const searchResults = this.state.searchResults.map(day => {
             return(
                 <div key={day.id} className="dayForecast">
-                    <ul>
-                        <li>{day.day}</li>
-                        <li>{day.forecast}</li>
-                        <li>{day.high}</li>
-                        <li>{day.low}</li>
-                    </ul>
+                    <p>{day.day}</p>
+                    <p>{day.forecast}</p>
+                    <p>{day.high}</p>
+                    <p>{day.low}</p>
                     <img src={day.icon} alt=""/>
                 </div>
 
