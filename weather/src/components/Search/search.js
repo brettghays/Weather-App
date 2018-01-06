@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios'
+import './search.css'
 
 const apiKey = "0a9e0cd119cd3229"
 
@@ -24,6 +25,8 @@ export default class Search extends Component {
             state: e.target.value
         });
     }
+
+     
 
     getForecast(e){
         e.preventDefault();
@@ -77,12 +80,30 @@ export default class Search extends Component {
             this.setState({
                 searchResults: results
             })
-            
+                       
         })
+        /* .then(axios.post(`/api/places`, this.state.searchResults)
+            .then(res => {console.log(res.data)})
+            .catch(err => console.log(err))) */
         .catch(err => console.log(err))
     }
 
     render(){
+        const searchResults = this.state.searchResults.map(day => {
+            return(
+                <div key={day.id} className="dayForecast">
+                    <ul>
+                        <li>{day.day}</li>
+                        <li>{day.forecast}</li>
+                        <li>{day.high}</li>
+                        <li>{day.low}</li>
+                    </ul>
+                    <img src={day.icon} alt=""/>
+                </div>
+
+            )
+        });
+        
         return(
             <div>
             <form onSubmit={e => this.getForecast(e)}>
@@ -143,7 +164,7 @@ export default class Search extends Component {
             </select>
             <input type="submit" value="Get Weather"/>
             </form>
-            
+            <div className="weatherCard">{searchResults}</div>
         </div>
         )        
     }
