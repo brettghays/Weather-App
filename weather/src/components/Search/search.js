@@ -11,6 +11,7 @@ export default class Search extends Component {
             city: '',
             state: '',
             searchResults: [],
+            citySearch: []
         }
     }
 
@@ -32,11 +33,14 @@ export default class Search extends Component {
         e.preventDefault();
         const {city,state} = this.state
         let results = [];
+        let citySearch = this.state.citySearch.slice(0);
+        console.log(citySearch)
         axios.get(`http://api.wunderground.com/api/${apiKey}/forecast10day/q/${state}/${city}.json`)
         .then(res => {
             results.push(
                 {
                     id:0,
+                    city: city,
                     day: res.data.forecast.simpleforecast.forecastday[0].date.weekday,
                     high: res.data.forecast.simpleforecast.forecastday[0].high.fahrenheit,
                     low: res.data.forecast.simpleforecast.forecastday[0].low.fahrenheit,
@@ -76,9 +80,13 @@ export default class Search extends Component {
                     forecast: res.data.forecast.simpleforecast.forecastday[4].conditions,
                 }
 
-            )
+            );
+            citySearch.push(results[0].city);
+            console.log(citySearch)
+            
             this.setState({
-                searchResults: results
+                searchResults: results,
+                citySearch: citySearch
             })
                        
         })
@@ -102,6 +110,14 @@ export default class Search extends Component {
             )
         });
         
+        /* const recentSearch = this.state.citySearch.filter((city,i) => {
+            let id = i;
+            return(
+            <div id={id} className="resultsCity">
+
+            </div>
+            )
+        }) */
         return(
             <div>
             <form onSubmit={e => this.getForecast(e)}>
